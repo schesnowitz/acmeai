@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<script>window.CKEDITOR_BASEPATH = "{% static '/ckeditor/ckeditor/' %}";</script>
+    <script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"
+            data-ckeditor-basepath="{% static 'ckeditor/ckeditor/' %}" id="ckeditor-init-script"></script>
+    <script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+<script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+<script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+
+{% block content %}
+<h2>{{ cover.company_name }} </h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.media }}
+    {{ form.as_p }}
+ 
+     
+    <button type="submit" class="btn btn-dark">Submit</button> 
+    
+  </form>
+
+{% endblock content %}

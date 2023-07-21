@@ -1,0 +1,59 @@
+{% load static %}
+<html>
+  <head>
+    <style>
+      @page {
+      size: a4 portrait;
+      @frame header_frame {           /* Static Frame */
+      -pdf-frame-content: header_content;
+      left: 50pt; width: 512pt; top: 50pt; height: 40pt;
+      }
+      @frame content_frame {          /* Content Frame */
+      left: 50pt; width: 512pt; top: 90pt; height: 632pt;
+      }
+      @frame footer_frame {           /* Another static Frame */
+      -pdf-frame-content: footer_content;
+      left: 20pt; width: 550pt; top: 780pt; height: 60pt;
+      }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Content for Static Frame 'header_frame' -->
+    <div id="header_content">
+      <h1>{% if pdf.cover_letter.show_company_name_on_pdf %}{{ company_name }}{% endif %} </h1>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <div style="text-align: center;" class='header'>
+          <br />
+          <h1>
+            {% if user.job_profile.show_my_name_on_pdf == True %}
+            {{ user.job_profile.full_name }}
+            {% endif %}
+          </h1>
+          {{ user.job_profile.content|safe}}
+        </div>
+      </div>
+      
+      <div class="card-body">
+        <p class="card-title">
+          {% if hiring_manager_info == None %}
+          **Update Hiring Manager and Address**
+          {% else %}
+          {{ hiring_manager_info|safe }}
+          {% endif %}
+        </p>
+        <hr>
+        {{date}}
+        <p class="card-text">{{ pdf.llm_text|safe }}</p>
+      </div>
+    </div>
+    <!-- Content for Static Frame 'footer_frame' -->
+    <div id="footer_content" style="text-align: center;" >
+      <hr>
+      <img src="/home/steve/Desktop/acme/static/images/logoround.png" alt="logo" width="40" height=""> 
+      <br>    &copy; acmeAI.io
+    </div>
+    <!-- HTML Content -->
+  </body>

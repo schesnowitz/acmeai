@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content%}
+{% load crispy_forms_tags %}
+{{user.email}}
+<div class="row">
+  <div class="col-md-4">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Documents</th>
+          <th scope="col">Urls</th>
+          <th scope="col">Chatters</th>
+          <th scope="col">Resumes Uploaded</th>
+          <th scope="col">Cover Letters Created</th>
+        </tr>
+      </thead>
+      <tbody> 
+        <tr>
+          <th scope="row">
+            <a href="{% url 'documents:index' %}">
+              {{ documents.all.count }}
+            </a>
+          </th>
+          <td><a href="{% url 'urls:index' %}">{{ urls.all.count }}</a></td>
+          <td><a href="{% url 'chats:index' %}">{{ chats.all.count }}</a></td>
+          <td><a href="{% url 'resumes:index' %}">{{ resumes.all.count }}</a></td>
+          <td><a href="{% url 'resumes:list_job_covers' user.id %}">{{ cover_letters.all.count }}</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-4"></div>
+  <div class="col-md-4">
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <button type="submit" class="btn btn-success btn-sm">Save</button> 
+    </form>
+    {{ text.text_4|safe }}
+  </div>
+</div>
+{% endblock content %}

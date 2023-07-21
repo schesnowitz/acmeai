@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<h2>{{ pdf.cover_letter.company_name }}</h2>
+<br />
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+    {{ form.media }}
+    {{ form.as_p }}
+  <button type="submit" class="btn btn-dark">Submit</button> 
+</form>
+<br>
+<h3>Cover Letter Closing Paragraph Examples</h3>
+<br>
+<div class="card">
+  <ul class="list-group list-group-flush">
+    <hr>
+    <li class="list-group-item">Thank you for taking the time to review my 
+      resume. I genuinely believe that my experience and education 
+      would make me a valuable asset to {{ pdf.cover_letter.company_name }}. 
+      I’m particularly excited about this opportunity and I look forward to learning more.
+      <br />
+      <br />
+      Sincerely,<br />
+      {{user.job_profile.full_name}}
+    </li>
+    <hr>
+    <li class="list-group-item">
+      In conclusion, my background and skill sets have prepared me to be a 
+      successful contributing team member in this type of environment and for 
+      an organization exactly like yours. Thank you so much for your time 
+      and consideration.
+      <br />
+      <br />
+      Sincerely,<br />
+      {{user.job_profile.full_name}}
+    </li>
+    <hr>
+    <li class="list-group-item">Thank you for considering my application. I hope to bring my industry expertise and experience to an organization like yours, where I can contribute to its growth and success. Please don’t hesitate to contact me at {{user.email}} if you need any additional information.      <br />
+      <br />
+      Sincerely,<br />
+      {{user.job_profile.full_name}}
+    </li>
+    <hr>
+    <li class="list-group-item">Thanks for your time and consideration. I’d love a chance to learn more about this position and demonstrate how I can help {{ pdf.cover_letter.company_name }} reach its organizational goals. I believe my skills and motivation make me a great potential asset. I can be reached at {{user.email}} if you need any other information.      <br />
+      <br />
+      Sincerely,<br />
+      {{user.job_profile.full_name}}
+    </li>
+    <hr>
+    <li class="list-group-item">     
+      I look forward to any opportunity to discuss the position and what I can do for your company. I believe my vision and values align with the {{ pdf.cover_letter.company_name }} brand and that I’d be an excellent fit for your organization. Thank you for your time in reviewing my resume.
+      <br />
+      <br />
+      Sincerely,<br />
+      {{user.job_profile.full_name}}
+    </li>
+    <hr>
+    <li class="list-group-item">
+      I know I can bring value to your organization and would love the chance to discuss how my experience and skills can contribute to the growth and success at {{ pdf.cover_letter.company_name }}. Thank you for taking the time to review my application. I’m available at {{user.email}} should you need further information.
+      <br />
+      <br />
+      Sincerely,<br />
+      {{user.job_profile.full_name}}
+      <hr>
+    </li>
+  </ul>
+</div>
+{% endblock content %}

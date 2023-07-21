@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="card text-center">
+  <div style="position: relative;">
+    <p style="position: absolute; left: 0; padding-top: 10px;">{{ cover.company_name }}</p>
+    <p style="position: absolute; right: 0; padding-top: 10px;">{{ cover.resume_id.description }}</p>
+  </div>
+  <div class="card-header">
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">{{ cover.company_name }}</h5>
+    <form method="post" id="trigger_llm">
+      <input type="hidden" name="form_type" value="trigger_llm">
+      {% csrf_token %}
+      <button class="btn btn-light btn-sm" type="submit">Generate Cover Letter</button> 
+    </form>
+  </div>
+  <div class="card-footer text-muted">
+    <a href="{% url 'resumes:update_description' cover.id %}"class="btn btn-dark btn-sm">
+    Update Job Description
+    </a>
+  </div>
+</div>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Created</th>
+      <th scope="col">Company</th>
+      <th scope="col">(a list of all AI content for this Company)</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for pdf in pdfs  %}
+    <tr>
+      <th scope="row">{{pdf.time}}</th>
+      <th scope="row">{{pdf.cover_letter.company_name}}</th>
+      <td>
+        <a href="{% url 'resumes:pdf_html' pdf.id %}" 
+          class="btn btn-outline-primary btn-sm">
+        View/Edit AI Content
+        </a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<br><br><br><br><br><br>
+{% endblock content %}

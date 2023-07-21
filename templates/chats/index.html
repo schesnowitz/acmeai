@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %} 
+{% block content %}
+<p>{{ text.url_link_description_1 }} <a href="{{text.url_1}}" target="_blank">
+  <img src="{% static 'images/yt.svg' %}" alt="youtube logo" width="40">
+  </a> 
+</p>
+<a href="{% url 'chats:create' %}" class="btn btn-outline-info" role="button">Create Prompt</a>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Uploaded</th>
+      <th scope="col"># of interactions</th>
+      <th scope="col">Description</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for instruction in instructions  %}
+    <tr>
+      <th scope="row">{{instruction.time}}</th>
+      <td>
+        {%  if instruction.chats.all.count == 0 %}
+        None
+        {% else %}
+        {{ instruction.chats.all.count }}
+        {% endif %}
+      </td>
+      <td>{{instruction.description|truncatewords:5}}</td>
+      <td>
+        <a href="{% url 'chats:delete' instruction.id %}"class="btn btn-outline-danger btn-sm">Delete</a>
+      </td>
+      <td><a href="{% url 'chats:csv' instruction.id %}" class="btn btn-outline-primary btn-sm">Download Data</a></td>
+      </td>
+      <td><a href="{% url 'chats:update' instruction.id %}" class="btn btn-outline-secondary btn-sm">View|Update</a></td>
+      <td><a href="{% url 'chats:chat' instruction.id %}"class="btn btn-outline-success btn-sm ms-3">Chat</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock content %} 

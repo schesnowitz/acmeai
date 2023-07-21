@@ -1,0 +1,48 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'pages:index' %}"> 
+    <img src="{% static '/images/logoround.png'%}" width="130" height="50" alt="">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarColor02">
+      <ul class="navbar-nav me-auto">
+        {% if user.is_authenticated %} 
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Interact with...
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="{% url 'documents:index' %}">Documents</a></li>
+            <li><a class="dropdown-item" href="{% url 'urls:index' %}">Urls</a></li>
+            <li><a class="dropdown-item" href="{% url 'chats:index' %}">Chat Bots</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Resume Covers
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li class="nav-item"><a class="nav-link" href="{% url 'resumes:index' %}">Upload Resumes</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'resumes:list_job_covers' user.id %}">Created Jobs</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'resumes:user_job_profile_form' user.id %}">My Cover Info</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'pages:user_profile' user.profile.id %}">Profile</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'account_logout' %}">Log Out</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'pages:private' %}">Private Data</a></li>
+        {% endif %} 
+        {% if not user.is_authenticated %}
+        <li class="nav-item"><a class="nav-link" href="{% url 'account_login' %}">Login</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'account_signup' %}">Sign Up</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'pages:private' %}">Private Data</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>

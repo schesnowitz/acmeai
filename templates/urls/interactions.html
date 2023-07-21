@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% load static %}
+<div class="row">
+  <div class="col-md-4">
+    <a class="btn btn-light btn-sm" href="{% url 'urls:index' %}">Back</a>
+</div>
+  <div class="col-md-4">
+
+  </div>
+  <div class="col-md-4">
+</div>
+</div>
+<br>
+<br>
+<div class='container'>{{ text.char_6 }} </div>
+<br>
+<div class="container bootstrap snippets bootdey">
+
+  <div class="tile tile-alt" id="messages-main">
+    <div class="ms-body">
+      <div class="msb-reply">
+        <form method=POST  id="urlInteract">
+          <input type="hidden" name="form_type" value="urlInteract">
+          {% csrf_token %}   
+          <input type="text" name="query" class="form-control" id="query" placeholder="Query LLM">
+          <button type="submit" ><i class="fa fa-paper-plane-o"></i></button>
+        </form>
+      </div>
+      {% for chat in sessions %}
+      <div class="message-feed media">
+        <div class="pull-left">
+          <img src="{% static 'images/human.png' %}" alt="" class="img-avatar">
+        </div>
+        <div class="media-body">
+          <div class="mf-content">
+            {{ chat.input }}
+          </div>
+          <small class="mf-date"><i class="fa fa-clock-o"></i> {{ chat.time }}</small>
+        </div>
+      </div>
+      <div class="message-feed right">
+        <div class="pull-right">
+          <img src="{% static 'images/robo.jpeg' %}" alt="" class="img-avatar">
+        </div>
+        <div class="media-body">
+          <div class="mf-content">
+            {{ chat.response }}                    
+          </div>
+          <small class="mf-date"><i class="fa fa-clock-o"></i> {{ chat.time }}</small>
+        </div>
+      </div>
+      {% endfor %}
+
+    </div>
+  </div>
+</div>
+{% endblock content %}

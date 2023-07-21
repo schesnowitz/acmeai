@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="px-4 py-5 my-5 text-center"> 
+  <h1 class="display-5 fw-bold text-body-emphasis">{{ text.text_7|safe }}</h1>
+  <div class="col-lg-6 mx-auto">
+    <p class="lead mb-4">
+      {{ text.text_8|safe }}
+    </p>
+  </div>
+</div>
+<div class="container text-center">
+  <div class="row">
+    <div class="col"> 
+      <a target="_blank" href="https://youtu.be/ouNGvIOp2us">
+        <video width="320" height="240" autoplay loop muted>
+          <source src="{% static 'videos/custom_chat.mp4' %}" type="video/mp4">
+        </video>
+      </a>
+    </div>
+    <div class="col">
+      <a target="_blank" href="https://www.youtube.com/watch?v=MbGQLK119Bw">
+        <video width="320" height="240" autoplay loop muted>
+          <source src="{% static 'videos/cover_letter.mp4' %}" type="video/mp4">
+        </video>
+      </a>
+    </div>
+    <div class="col">
+      <a target="_blank" href="https://youtu.be/a6p_NF4LNUo">
+        <video width="320" height="240" autoplay loop muted>
+          <source src="{% static 'videos/yt_vid.mp4' %}" type="video/mp4">
+        </video>
+      </a>
+    </div>
+  </div>
+</div> 
+<div class="container">
+  {{ text.text_9|safe }}  
+  {{text.text_3|safe}}
+
+</div>
+
+{% endblock content %}

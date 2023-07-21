@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<h1>{% if pdf.cover_letter.show_company_name_on_pdf %}{{ company_name }}{% endif %} </h1>
+
+<div class="card">
+  <div class="card-header">
+    <div style="text-align: center;" class='header'>
+      <a href="{% url 'resumes:user_job_profile_pdf' user.id pdf.id %}">Edit My Info</a>
+      <br />
+      <h1>
+        {% if user.job_profile.show_my_name_on_pdf == True %}
+        {{ user.job_profile.full_name }}
+        {% endif %}
+        </h1>
+      {{ user.job_profile.content|safe}}
+    </div>
+  </div>
+  <div class="card-body">
+    <a href="{% url 'resumes:cover_address' pdf.cover_letter.id pdf.id %}"  >Edit Hiring Manager Info</a>
+    <p class="card-title">
+      {% if hiring_manager_info == None %}
+      **Update Hiring Manager and Address**
+      {% else %}
+      {{ hiring_manager_info|safe }}
+      {% endif %}
+      
+    </p>
+    {{date}}
+    <p class="card-text">{{ pdf.llm_text|safe }}</p>
+    <a href="{% url 'resumes:edit_generated_text' pdf.id %}" class="btn btn-info">
+    edit AI content
+    </a>
+  </div>
+  <a href="{% url 'resumes:pdf_view' pdf.id %}" 
+    class="btn btn-primary" target="_blank"> 
+  View PDF
+  </a>
+  <a href="{% url 'resumes:pdf_download' pdf.id %}" 
+  class="btn btn-dark" target="_blank"> 
+Download PDF
+</a>
+</div>
+{% endblock content %}

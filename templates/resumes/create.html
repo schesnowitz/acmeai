@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<h2>Resume: {{resume.description}}</h2>
+<strong>This is where you add the job description and other information about the job.
+Below you will have a list of all job applications you have created. 
+</strong>
+</br></br> 
+<div class="accordion" id="accordionExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+      Hide Job Application Form
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingTwo">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+        <p>Show Job Application Form<small>  (create a new application)</small></p>
+      </button>
+    </h2>
+    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <p>Paste in the job description here.</p>
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ form|crispy }} 
+          {{ form.media }} 
+          <button type="submit" class="btn btn-dark">Submit</button> 
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<h3>Job Applications</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Created</th>
+      <th scope="col">Number of Letters</th>
+      <th scope="col">Resume</th>
+      <th scope="col">Company</th>
+      <th scope="col">Link to description</th>
+      <th scope="col">Generate a Cover Letter Using AI</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for cov in cover  %}
+    <tr>
+      <th scope="row">{{ cov.time }}</th>
+      <td>
+        {{ cov.covers.all.count }}
+      </td>
+      <td>
+        {{ resume.description }}
+      </td>
+      <td>{{ cov.company_name }}</td>
+      <td>
+        {% if cov.job_description_url %}
+        <a href="{{ cov.job_description_url }}" 
+          class="btn btn-outline-primary btn-sm" target="_blank">
+        View URL
+        </a>
+        {% else %}
+        No URL Provided
+        {% endif %}
+      </td>
+      <td>
+        <a href="{% url 'resumes:trigger_and_list' cov.id %}" 
+          class="btn btn-outline-primary btn-sm">
+        Create/View Letters
+        </a>
+      </td>
+      <td>
+        <a href="{% url 'resumes:delete_cover' cov.id %}" 
+          class="btn btn-outline-danger btn-sm">Delete
+        </a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<br><br><br><br><br>
+{% endblock content %}

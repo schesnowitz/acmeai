@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %} 
+{% load crispy_forms_tags %}
+<div class="row">
+  <div class="col-md-1"></div>
+  <div class="col-md-7">
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <button type="submit">Enter Url</button> 
+    </form>
+  </div>
+  <div class="col-md-4"></div>
+</div>
+<br><br>
+<div class="row">
+  <div class="col-md-4"><p>{{ text.url_link_description_3 }} <a href="{{text.url_3}}" target="_blank">
+  <img src="{% static 'images/yt.svg' %}" alt="youtube logo" width="40">
+  </a> 
+</p></div> 
+  <div class="col-md-4">{{ text.text_1|safe }}</div>
+  <div class="col-md-4"></div>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Uploaded</th>
+      <th scope="col"># of interactions</th>
+      <th scope="col">Description</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for url in urls  %}
+    <tr>
+      <th scope="row">{{url.time}}</th>
+      <td>
+        {%  if url.session_id.all.count == 0 %}
+        None
+        {% else %}
+        {{ url.session_id.all.count }}
+        {% endif %}
+      </td>
+      <td>{{url.description}}</td>
+      <td>
+        <a href="{% url 'urls:delete' url.id %}" class="btn btn-outline-danger btn-sm">Delete Url</a>
+      </td>
+      <td><a href="{{ url.url_path }}" class="btn btn-outline-primary btn-sm" target="_blank">View Original</a></td>
+      <td><a href="{% url 'urls:csv' url.id %}"class="btn btn-outline-secondary btn-sm">Download Data</a></td>
+      <td><a href="{% url 'urls:interactions' url.id %}" class="btn btn-outline-success btn-sm">Interact</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock content %}
